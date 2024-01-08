@@ -1,15 +1,21 @@
-provider "aws" {
-  region = "us-east-1"  
+# File: ec2_instance/main.tf
+
+variable "ami" {
+  description = "ID của AMI cho EC2 instance"
 }
 
-variable "ec2_name" {
-  description = "Name EC2 instance"
+variable "instance_type" {
+  description = "Loại của EC2 instance"
+}
+
+variable "tags" {
+  description = "Các tag cho EC2 instance"
+  type        = map(string)
 }
 
 resource "aws_instance" "example" {
-  ami           = "ami-0c55b159cbfafe1f0" 
-  instance_type = "t2.micro"              
-  tags = {
-    Name = var.ec2_name
-  }
+  ami           = var.ami
+  instance_type = var.instance_type
+
+  tags = var.tags
 }
